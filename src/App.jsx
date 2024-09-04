@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Catalog from "./pages/Catalog";
-import Product from "./pages/Product";
 import { Car } from "./utils/car";
 import { useEffect } from "react";
 import ProductDetail from "./pages/Product";
+import Cart from "./pages/Cart";
 
 // CREO UNA INSTANCIA car A PARTIR DE LA CLASE Car
 const car = new Car();
@@ -23,6 +23,7 @@ function App() {
           EN ESTE CASO id ES UN PARAMETRO DE LA URL*/}
           <Route path=":id" element={<ProductDetail />} />
         </Route>
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </BrowserRouter>
   );

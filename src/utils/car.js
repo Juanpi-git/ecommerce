@@ -46,17 +46,24 @@ export class Car {
   // MÉTODO PARA ELIMINAR UN PRODUCTO DEL CARRITO
   removeFromCar(productId) {
     //ELIMINA UN PRODUCTO DEL CARRITO BUSCANDO POR EL ID, DISMINUYENDO LA CANTIDAD Y ACTUALIZANDO EL SUBTOTAL
-    this.products = this.products.map((product, index) => {
-      if (product.id === productId && product.quantity == 1) {
-        return this.products.splice(index, 1);
-      } else if (product.id === productId && product.quantity !== 1) {
-        return {
-          ...product,
-          quantity: product.quantity - 1,
-          subtotal: product.price * (product.quantity - 1),
-        };
-      }
-    });
+    this.products = this.products
+      .map((product) => {
+        if (product.id === productId) {
+          return {
+            ...product,
+            quantity: product.quantity - 1,
+            subtotal: product.price * (product.quantity - 1),
+          };
+        }
+        return product;
+      })
+      //falta completar
+      .filter();
+
+    if (!this.products[0].id) {
+      this.unfillCar();
+    }
+
     this.total = this.products.reduce((acc, curr) => acc + curr.subtotal, 0);
     this.quantity = this.products.reduce((acc, curr) => acc + curr.quantity, 0);
   }
