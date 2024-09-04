@@ -1,3 +1,5 @@
+// CREO LA CLASE PRODUCT (PRODUCTO) QUE RECIBE COMO PARÁMETROS:
+// ID, TITULO, CATEGORÍA, PRECIO, DESCRIPCIÓN, IMAGEN Y CANTIDAD
 export class Product {
   constructor(id, title, category, price, description, image, quantity) {
     this.id = id;
@@ -11,36 +13,43 @@ export class Product {
   }
 }
 
+// CREO LA CLASE CAR (CARRITO) QUE RECIBE COMO PARÁMETROS:
+// PRODUCTOS, TOTAL Y CANTIDAD
 export class Car {
-  constructor() {
-    this.products = [];
-    this.total = 0;
-    this.quantity = 0;
+  constructor(products, total, quantity) {
+    this.products = products || [];
+    this.total = total || 0;
+    this.quantity = quantity || 0;
   }
 
-  addToCar(product) {
-    this.products.map((p) => {
-      if (p.id == product.id) {
-        return {
-          ...product,
-          quantity: product.quantity + 1,
-          subtotal: product.price * (product.quantity + 1),
-        };
-      } else {
-        this.products.push(product);
-      }
-    });
-    // EL MÉTODO reduce ITERA products Y VA ACUMULANDO EL SUBTOTAL Y LA CANTIDAD
-    // SUMANDO LO QUE YA HABÍA MÁS LO QUE APORTA CADA PRODUCTO QUE SE AGREGA AL car
-    this.total = this.products.reduce((acc, curr) => acc + curr.subtotal, 0);
-    this.quantity = this.products.reduce((acc, curr) => acc + curr.quantity, 0);
+  // MÉTODO PARA AGREGAR UN PRODUCTO AL CARRITO
+  addToCar(newProduct) {
+    let existe = this.products.some((product) => product.id === newProduct.id);
+    if (existe) {
+      //SI EL PRODUCTO YA EXISTE EN EL CARRITO, AUMENTA LA CANTIDAD Y EL SUBTOTAL
+      this.products.map((product) => {
+        if (newProduct.id === product.id) {
+          product.quantity++;
+          product.subtotal = product.price * product.quantity;
+        }
+        return product;
+      });
+    } else {
+      //AGREGA UN PRODUCTO AL CARRITO SI NO EXISTE
+      this.products.push(newProduct);
+    }
+    // ACTUALIZA EL TOTAL Y LA CANTIDAD DEL CARRITO
+    this.total = this.products.reduce((acc, curr) => acc + curr.subtotal, 0); // EL MÉTODO reduce ITERA products Y VA ACUMULANDO EL SUBTOTAL Y LA CANTIDAD
+    this.quantity = this.products.reduce((acc, curr) => acc + curr.quantity, 0); // SUMANDO LO QUE YA HABÍA MÁS LO QUE APORTA CADA PRODUCTO QUE SE AGREGA AL car
   }
 
+  // MÉTODO PARA ELIMINAR UN PRODUCTO DEL CARRITO
   removeFromCar(productId) {
-    this.products.map((product, index) => {
-      if (product.id == productId && product.quantity == 1) {
+    //ELIMINA UN PRODUCTO DEL CARRITO BUSCANDO POR EL ID, DISMINUYENDO LA CANTIDAD Y ACTUALIZANDO EL SUBTOTAL
+    this.products = this.products.map((product, index) => {
+      if (product.id === productId && product.quantity == 1) {
         return this.products.splice(index, 1);
-      } else if (product.id == productId && product.quantity != 1) {
+      } else if (product.id === productId && product.quantity !== 1) {
         return {
           ...product,
           quantity: product.quantity - 1,
@@ -48,22 +57,28 @@ export class Car {
         };
       }
     });
+    this.total = this.products.reduce((acc, curr) => acc + curr.subtotal, 0);
+    this.quantity = this.products.reduce((acc, curr) => acc + curr.quantity, 0);
   }
 
+  // MÉTODO PARA VACIAR EL CARRITO
   unfillCar() {
     this.products = [];
     this.total = 0;
     this.quantity = 0;
   }
 
+  // MÉTODO PARA OBTENER LOS PRODUCTOS DEL CARRITO
   getProducts() {
     return this.products;
   }
 
+  // MÉTODO PARA OBTENER EL TOTAL DEL CARRITO
   getTotal() {
     return this.total;
   }
 
+  // MÉTODO PARA OBTENER LA CANTIDAD DEL CARRITO
   getQuantity() {
     return this.quantity;
   }

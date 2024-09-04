@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
 import { Car } from "./utils/car";
 import { useEffect } from "react";
+import ProductDetail from "./pages/Product";
 
-// CREO UN OBJETO car A PARTIR DE LA CLASE Car
+// CREO UNA INSTANCIA car A PARTIR DE LA CLASE Car
 const car = new Car();
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
     // METO MI OBJETO car DENTRO DEL localStorage EN FORMATO JSON
     window.localStorage.setItem("car", JSON.stringify(car));
   }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -20,7 +21,7 @@ function App() {
         <Route path="/product">
           {/* AL PONER LOS ":" ESTAMOS HACIENDO UNA QUERY(CONSULTA), 
           EN ESTE CASO id ES UN PARAMETRO DE LA URL*/}
-          <Route path=":id" element={<Product />} />
+          <Route path=":id" element={<ProductDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
