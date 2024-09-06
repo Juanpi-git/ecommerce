@@ -46,6 +46,8 @@ export class Car {
   // MÉTODO PARA ELIMINAR UN PRODUCTO DEL CARRITO
   removeFromCar(productId) {
     //ELIMINA UN PRODUCTO DEL CARRITO BUSCANDO POR EL ID, DISMINUYENDO LA CANTIDAD Y ACTUALIZANDO EL SUBTOTAL
+
+    // PRIMERO MAPEA LOS PRODUCTOS BUSCANDO POR EL ID Y DISMINUYENDO LA CANTIDAD
     this.products = this.products
       .map((product) => {
         if (product.id === productId) {
@@ -57,13 +59,11 @@ export class Car {
         }
         return product;
       })
-      //falta completar
-      .filter();
+      // FILTRA LOS PRODUCTOS SIN CANTIDAD Y DEVUELVE UN ARRAY CON SOLAMENTE LOS PRODUCTOS
+      // QUE NO TIENEN CANTIDAD 0
+      .filter((product) => product.quantity !== 0);
 
-    if (!this.products[0].id) {
-      this.unfillCar();
-    }
-
+    // ACTUALIZA EL TOTAL Y LA CANTIDAD DEL CARRITO
     this.total = this.products.reduce((acc, curr) => acc + curr.subtotal, 0);
     this.quantity = this.products.reduce((acc, curr) => acc + curr.quantity, 0);
   }

@@ -21,7 +21,8 @@ function Catalog() {
     <>
       <NavBar />
       <div className="h-full w-screen bg-slate-400">
-        <h1 className="font-bold text-5xl py-10 text-center ">Productos</h1>
+        <h1 className="font-bold text-5xl py-10 text-center">Productos</h1>
+
         <ul className="w-full h-full flex flex-wrap gap-5 justify-center ">
           {products // SI LOS PRODUCTOS ESTÁN CARGADOS, MAPEA Y MUESTRA LOS PRODUCTOS
             ? products.map((product, index) => (

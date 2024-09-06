@@ -33,13 +33,10 @@ function ProductDetail() {
       product.image,
       1
     );
-
     //OBTIENE LOS DATOS DEL CARRITO DEL LOCALSTORAGE
     const carData = JSON.parse(window.localStorage.getItem("car"));
-
     // CREA UNA INSTANCIA DE CAR CON LOS PRODUCTOS DEL CARRITO
     const car = new Car(carData.products, carData.total, carData.quantity);
-
     // AGREGA EL PRODUCTO NUEVO AL CARRITO Y GUARDA LOS NUEVOS DATOS EN EL LOCALSTORAGE
     car.addToCar(newProduct);
     window.localStorage.setItem("car", JSON.stringify(car));
@@ -48,10 +45,8 @@ function ProductDetail() {
   function removeFromCart(product) {
     //OBTIENE LOS DATOS DEL CARRITO DEL LOCALSTORAGE
     const carData = JSON.parse(window.localStorage.getItem("car"));
-
     // CREA UNA INSTANCIA DE CAR CON LOS PRODUCTOS DEL CARRITO
     const car = new Car(carData.products, carData.total, carData.quantity);
-
     // BORRA UNA UNIDAD DEL PRODUCTO DEL CARRITO Y GUARDA LOS NUEVOS DATOS EN EL LOCALSTORAGE
     car.removeFromCar(product.id);
     window.localStorage.setItem("car", JSON.stringify(car));
@@ -66,7 +61,7 @@ function ProductDetail() {
             Cargando producto...
           </div>
         ) : (
-          <div className="flex flex-col justify-start items-center w-1/3 gap-4 bg-slate-300 py-2 px-3">
+          <div className="flex flex-col justify-center items-center w-1/3 gap-4 bg-slate-300 py-2 px-3 my-5 rounded-lg">
             <span className="font-bold underline">
               {product.title.toUpperCase()}
             </span>
@@ -84,7 +79,7 @@ function ProductDetail() {
               <p className="font-semibold inline">Categoría: </p>
               {product.category}
             </span>
-            <span>{product.description}</span>
+            <span className="text-xs">{product.description}</span>
             <div className="w-3/4 flex justify-center gap-5">
               <button
                 onClick={() => removeFromCart(product)}
